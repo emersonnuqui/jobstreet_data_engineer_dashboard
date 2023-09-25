@@ -25,13 +25,22 @@ import spacy
 from spacy.matcher import Matcher
 from pipelines import scraper, clean_data, matcher, load
 
+# Set the output directory
+current_directory = os.getcwd()
+
+# Set current date
+now = datetime.now()
+start_date = now.strftime('%Y-%m-%d')
+
+output_directory = f"{current_directory}/data/jobstreet-{start_date}.csv"
+
 # Read environment variables
 host = os.environ.get("RDS_HOST")
 user = os.environ.get("RDS_USER")
 password = os.environ.get("RDS_PASS")
-print(host)
 
 jobs_data = scraper.scrape_jobstreet("Data Engineer", "National Capital Region")
+scraper.data_to_s3(output_directory)
 clean_job_data = clean_data.clean_data(jobs_data)
 clean_job_data_with_tech = matcher.matcher(clean_job_data)
 

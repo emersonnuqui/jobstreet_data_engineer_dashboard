@@ -9,6 +9,7 @@ from datetime import datetime
 
 
 def clean_salary(salary):
+    
     matches = re.findall(r"\d{1,3},\d{1,3}", str(salary))
     return int(matches[0].replace(",", "")) if matches else None
 
@@ -40,7 +41,7 @@ def clean_qualification(df):
     return df
 
 def clean_data(df):
-    df = [["job_id", "title", "location", "company",
+    df = df[["job_id", "title", "location", "company",
             "salary", "summary", "job_url", "Qualification",
             "Years of Experience", "Job Type", "Company Size"]]
     #df['title'] = df['title'].map(clean_title)
