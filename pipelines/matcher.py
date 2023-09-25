@@ -10,7 +10,7 @@ from datetime import datetime
 import spacy
 from spacy.matcher import Matcher
 
-def get_languages(matcher, text):
+def get_languages(matcher, nlp, text):
     languages = [[{"LOWER": {"IN": ['apl', 'assembly', 'bash', 'shell', 'c++', 'c#', 'clojure',
                           'cobol', 'crystal', 'dart', 'delphi', 'elixir', 'haskell',
                           'java', 'javascript', 'julia', 'matlab', 'php','powershell', 'python',
@@ -32,7 +32,7 @@ def get_languages(matcher, text):
     languages = ", ".join(languages)
     return languages if languages != '' else None
 
-def get_databases(matcher, text):
+def get_databases(matcher, nlp, text):
     
     databases = [[{"LOWER": {"IN": ['cassandra', 'couchbase', 'couchdb', 'dynamodb', 'elasticsearch', 
                                  'mariadb', 'mongodb', 'mysql', 'neo4j', 'oracle', 'postgresql',
@@ -55,7 +55,7 @@ def get_databases(matcher, text):
     database = ", ".join(database)
     return database if database != '' else None
 
-def get_cloud_platforms(matcher, text):
+def get_cloud_platforms(matcher, nlp, text):
     cloud_platforms = [[{"LOWER": {"IN": ['aws', 'amazon', 'colocation', 'digitanocean', 'firebase',
                                         'heroku', 'linode', 'openstack', 'azure', 'gcp', 'ovh', 'vmware']}}],
                      [{"LOWER":'amazon'}, {"LOWER": "web"}],
@@ -91,7 +91,7 @@ def get_cloud_platforms(matcher, text):
     final_cloud = ", ".join(final_cloud)
     return final_cloud if final_cloud != '' else None
  
-def get_web_frameworks(matcher, text):
+def get_web_frameworks(matcher, nlp, text):
     web_frameworks = [[{"LOWER": {"IN": ['angular', 'django', 'drupal', 'fastapi', 'fastify',
                                    'flask', 'jquery', 'gatsby', 'laravel', 'phoenix',
                                    'svelte', 'symfony', 'nodejs', 'nextjs', 'aspnet', 
@@ -110,7 +110,7 @@ def get_web_frameworks(matcher, text):
     web_framework = ", ".join(web_framework)
     return web_framework if web_framework != '' else None
 
-def get_libraries(matcher, text):
+def get_libraries(matcher, nlp, text):
     libraries = [[{"LOWER": {"IN": ['kafka', 'spark', 'capacitor', 'electron', 'flutter',
                                'gtk', 'hadoop', 'ionic', 'keras', 'numpy', 'pandas',
                                'qt', 'scikit-learn', 'tensorflow', 'tidyverse',
@@ -133,7 +133,7 @@ def get_libraries(matcher, text):
     library = ", ".join(library)
     return library if library != '' else None
 
-def get_developers(matcher, text):
+def get_developers(matcher, nlp, text):
     developers = [[{"LOWER" : {"IN": ['ansible', 'chef', 'docker', 'homebrew', 'kubernetes',
                                  'npm', 'pulumi', 'pupper', 'terraform', 'yarn']}}],
              [{"LOWER": "unity"}, {"LOWER": "3d"}],
@@ -153,7 +153,7 @@ def get_developers(matcher, text):
     developer = ", ".join(developer)
     return developer if developer != '' else None
 
-def get_data_visualizations(matcher, text):
+def get_data_visualizations(matcher, nlp, text):
     data_viz = [[{"LOWER": {"IN": ['looker', 'tableau', 'qlik', 'powerbi']}}],
                [{"LOWER": "power"}, {"LOWER": 'bi'}]]
     
@@ -179,7 +179,7 @@ def get_data_visualizations(matcher, text):
     final_data_viz = ", ".join(final_data_viz)
     return final_data_viz if final_data_viz != '' else None
 
-def get_version_controls(matcher, text):
+def get_version_controls(matcher, nlp, text):
     version_controls = [[{"LOWER": {"IN": ['bitbucket', 'github', 'gitlab']}}]]
     
     for version_control in version_controls:
@@ -212,13 +212,13 @@ def matcher(df):
         text = row['summary']
         
         df.loc[i, ['languages', 'databases', 'cloud_platforms', 'web_frameworks',
-                    'libraries', 'developers', 'data_visualization', 'version_controls']] = [get_languages(language_matcher, text),
-                                                                                                get_databases(database_matcher, text),
-                                                                                                get_cloud_platforms(cloud_matcher, text),
-                                                                                                get_web_frameworks(web_framework_matcher, text),
-                                                                                                get_libraries(library_matcher, text),
-                                                                                                get_developers(developer_matcher, text),
-                                                                                                get_data_visualizations(data_viz_matcher, text),
-                                                                                                get_version_controls(version_control_matcher, text)
+                    'libraries', 'developers', 'data_visualization', 'version_controls']] = [get_languages(language_matcher, nlp, text),
+                                                                                                get_databases(database_matcher, nlp, text),
+                                                                                                get_cloud_platforms(cloud_matcher, nlp, text),
+                                                                                                get_web_frameworks(web_framework_matcher, nlp, text),
+                                                                                                get_libraries(library_matcher, nlp, text),
+                                                                                                get_developers(developer_matcher, nlp, text),
+                                                                                                get_data_visualizations(data_viz_matcher, nlp, text),
+                                                                                                get_version_controls(version_control_matcher, nlp, text)
                                                                                                 ]
     return df

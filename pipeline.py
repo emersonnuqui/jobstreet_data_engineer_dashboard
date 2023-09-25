@@ -36,8 +36,10 @@ output_directory = f"{current_directory}/data/jobstreet-{start_date}.csv"
 
 # Read environment variables
 host = os.environ.get("RDS_HOST")
-user = os.environ.get("RDS_USER")
+user = os.environ.get("RDS_USERNAME")
 password = os.environ.get("RDS_PASS")
+
+nlp = spacy.load("en_core_web_sm")
 
 jobs_data = scraper.scrape_jobstreet("Data Engineer", "National Capital Region")
 scraper.data_to_s3(output_directory)
