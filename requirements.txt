@@ -29,3 +29,4 @@ seaborn==0.11.2
 xgboost==1.5.0
 boto3==1.18.8
 python-decouple==3.4
+dash==2.12.1

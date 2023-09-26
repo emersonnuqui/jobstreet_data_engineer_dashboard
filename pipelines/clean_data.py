@@ -9,7 +9,6 @@ from datetime import datetime
 
 
 def clean_salary(salary):
-    
     matches = re.findall(r"\d{1,3},\d{1,3}", str(salary))
     return int(matches[0].replace(",", "")) if matches else None
 
